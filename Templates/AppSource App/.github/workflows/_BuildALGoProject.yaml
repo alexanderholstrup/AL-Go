@@ -91,6 +91,7 @@ jobs:
             project: ${{ inputs.project }}
 
         - name: Read secrets
+          if: inputs.secrets != ''
           uses: microsoft/AL-Go-Actions/ReadSecrets@main
           env:
             secrets: ${{ toJson(secrets) }}
@@ -98,7 +99,6 @@ jobs:
             shell: ${{ inputs.shell }}
             parentTelemetryScopeJson: ${{ inputs.parentTelemetryScopeJson }}
             settingsJson: ${{ env.Settings }}
-            secrets: ${{ inputs.secrets }}
 
         - name: Determine ArtifactUrl
           uses: microsoft/AL-Go-Actions/DetermineArtifactUrl@main
