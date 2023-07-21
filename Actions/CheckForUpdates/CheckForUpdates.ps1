@@ -228,8 +228,8 @@ try {
                         } else {
                             $pullRequestTrigger = 'pull_request_target'
                         }
-                        $yaml.Replace('on:/pull_request_target', "on:/$pullRequestTrigger")
-                        $yaml.Replace('on:/pull_request', "on:/$pullRequestTrigger")
+                        $yaml.Replace('pull_request_target', "$pullRequestTrigger")
+                        $yaml.Replace('pull_request', "$pullRequestTrigger")
 
                         
                         if ($repoSettings.Keys -contains 'CICDPullRequestBranches') {
