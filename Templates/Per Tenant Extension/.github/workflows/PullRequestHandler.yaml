@@ -1,7 +1,7 @@
 name: 'Pull Request Build'
 
 on:
-  pull_request_target:
+  pull_request:
     paths-ignore:
       - '**.md'
     branches: [ 'main' ]
@@ -105,7 +105,7 @@ jobs:
       project: ${{ matrix.project }}
       buildMode: ${{ matrix.buildMode }}
       projectDependenciesJson: ${{ needs.Initialization.outputs.projectDependenciesJson }}
-      secrets: 'licenseFileUrl,insiderSasToken,keyVaultCertificateUrl,keyVaultCertificatePassword,keyVaultClientId,gitHubPackagesContext'
+      secrets: ''
       publishThisBuildArtifacts: ${{ needs.Initialization.outputs.workflowDepth > 1 }}
 
   PostProcess:
