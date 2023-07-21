@@ -91,6 +91,7 @@ jobs:
             project: ${{ inputs.project }}
 
         - name: Read secrets
+          if: inputs.secrets != ''
           uses: microsoft/AL-Go-Actions/ReadSecrets@main
           env:
             secrets: ${{ toJson(secrets) }}
