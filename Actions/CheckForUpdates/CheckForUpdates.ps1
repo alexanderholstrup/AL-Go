@@ -223,6 +223,15 @@ try {
 
                     # The PullRequestHandler workflow can have a RepoSetting called CICDPullRequestBranches, which will be used to set the branches for the workflow
                     if ($baseName -eq "PullRequestHandler") {
+                        if ($repoSettings.secretlessPRBuild -eq $true) {
+                            $pullRequestTrigger = 'pull_request'
+                        } else {
+                            $pullRequestTrigger = 'pull_request_target'
+                        }
+                        $yaml.Replace('on:/pull_request_target', "on:/$pullRequestTrigger")
+                        $yaml.Replace('on:/pull_request', "on:/$pullRequestTrigger")
+
+                        
                         if ($repoSettings.Keys -contains 'CICDPullRequestBranches') {
                             $CICDPullRequestBranches = $repoSettings.CICDPullRequestBranches
                         }
@@ -230,7 +239,7 @@ try {
                             $CICDPullRequestBranches = $defaultCICDPullRequestBranches
                         }
                         # update the branches: line with the new branches
-                        $yaml.Replace('on:/pull_request_target:/branches:', "branches: [ '$($cicdPullRequestBranches -join "', '")' ]")
+                        $yaml.Replace("on:/$($pullRequestTrigger):/branches:", "branches: [ '$($cicdPullRequestBranches -join "', '")' ]")
                     }
 
                     # Repo Setting runs-on and shell determines which GitHub runner is used for all non-build jobs (build jobs are run using the GitHubRunner/GitHubRunnerShell repo settings)
