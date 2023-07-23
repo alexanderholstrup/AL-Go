@@ -227,12 +227,11 @@ try {
                         Write-Host "TEST: $($repoSettings.secretlessPRBuild -eq $true)"
                         if ($repoSettings.secretlessPRBuild -eq $true) {
                             $pullRequestTrigger = 'pull_request'
+                            $yaml.Replace("on:/pull_request_target", "on:/pull_request")
                         } else {
                             $pullRequestTrigger = 'pull_request_target'
+                            $yaml.Replace("on:/pull_request", "on:/pull_request_target")
                         }
-                        $yaml.Replace('pull_request_target', "$pullRequestTrigger")
-                        $yaml.Replace('pull_request', "$pullRequestTrigger")
-
                         
                         if ($repoSettings.Keys -contains 'CICDPullRequestBranches') {
                             $CICDPullRequestBranches = $repoSettings.CICDPullRequestBranches
