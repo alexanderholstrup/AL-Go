@@ -223,6 +223,8 @@ try {
 
                     # The PullRequestHandler workflow can have a RepoSetting called CICDPullRequestBranches, which will be used to set the branches for the workflow
                     if ($baseName -eq "PullRequestHandler") {
+                        Write-Host "TEST: $($repoSettings.secretlessPRBuild)"
+                        Write-Host "TEST: $($repoSettings.secretlessPRBuild -eq $true)"
                         if ($repoSettings.secretlessPRBuild -eq $true) {
                             $pullRequestTrigger = 'pull_request'
                         } else {
